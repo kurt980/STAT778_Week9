@@ -716,8 +716,8 @@ Y = -\frac{1}{\lambda_r}\log(1 - U), \quad U \sim \text{Uniform}(0,1)
 </div>
 <div id="case-2-interior" class="section level4">
 <h4>Case 2: Interior</h4>
-<p>The proposal for this case now is two pieces, to write it as a true
-density, we can weight the components:</p>
+<p>The proposal for this case now is two pieces, we need to write the
+envelope as a true density, weighing the components:</p>
 <p><span class="math display">\[
 g(x) = \frac{c_l}{c_l+c_r}\lambda_l e^{-\lambda_l(m-x)}\mathbf{1}[x &lt;
 m] +
@@ -898,7 +898,8 @@ density.</p>
 </div>
 <div id="activity-4" class="section level2">
 <h2>Activity 4</h2>
-<p>The von Mises distribution has density:</p>
+<p>The von Mises distribution has density and we can single out the
+nominator:</p>
 <p><span class="math display">\[
 f(x; \mu, \kappa) = \frac{e^{\kappa \cos(x - \mu)}}{2\pi I_0(\kappa)}
 \propto e^{\kappa \cos(x - \mu)} =: h(x; \mu, \kappa)
@@ -907,26 +908,27 @@ f(x; \mu, \kappa) = \frac{e^{\kappa \cos(x - \mu)}}{2\pi I_0(\kappa)}
 \pi]\)</span>, with <span class="math inline">\(\mu \in [\pi,
 2\pi]\)</span> and <span class="math inline">\(\kappa &gt;
 0\)</span>.</p>
-<p>The ratio-of-uniforms method defines the set:</p>
+<p>According to the ratio-of-uniforms method, the set <span class="math inline">\(C_h\)</span> is a desired set in the form:</p>
 <p><span class="math display">\[
 C_h = \{(u, v) : 0 &lt; u \leq \sqrt{h(v/u; \mu, \kappa)}\}
 \]</span></p>
-<p>We need to find two bounding polygons <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> such that <span class="math inline">\(C_h \subset C_1\)</span> and <span class="math inline">\(C_h \subset C_2\)</span>.</p>
+<p>This set will give us the target distribution from the ratio of
+uniform variables. We need to find two bounding polygons <span class="math inline">\(C_1\)</span> and <span class="math inline">\(C_2\)</span> such that <span class="math inline">\(C_h \subset C_1\)</span> and <span class="math inline">\(C_h \subset C_2\)</span>.</p>
 <div id="deriving-parameters-for-c_1" class="section level3">
 <h3>Deriving Parameters for C_1:</h3>
-<p>Rectangle <span class="math inline">\([0, x_u] \times [y_l,
-y_u]\)</span></p>
+<p><span class="math inline">\(C_1\)</span> is a rectangle <span class="math inline">\([0, x_u] \times [y_l, y_u]\)</span></p>
 <ul>
 <li>Finding <span class="math inline">\(x_u\)</span></li>
 </ul>
-<p>We need the maximum possible value of <span class="math inline">\(u\)</span> over all <span class="math inline">\((u,v) \in C_h\)</span>. Since <span class="math inline">\(u \leq \sqrt{h(v/u)}\)</span>, meanwhile letting
-<span class="math inline">\(x = v/u\)</span>:</p>
+<p>We can see that the right bound of the rectangle is <span class="math inline">\(x_u\)</span>, so finding <span class="math inline">\(x_u\)</span> is equivalent to finding the maximum
+value of <span class="math inline">\(u\)</span> over all <span class="math inline">\((u,v) \in C_h\)</span>. Since <span class="math inline">\(u \leq \sqrt{h(v/u)}\)</span>, letting <span class="math inline">\(x = v/u\)</span> we get the supreme <span class="math inline">\(\sup u = \sqrt{h(x)}\)</span>, then we need to
+maximize <span class="math inline">\(\sqrt{h(x)\)</span></p>
 <p><span class="math display">\[
 x_u = \sup_{x \in (\mu - \pi, \mu + \pi]} \sqrt{h(x)} = \sup_x e^{\kappa
 \cos(x - \mu)/2}
 \]</span></p>
-<p>The exponential is maximized when <span class="math inline">\(\cos(x
-- \mu)\)</span> is maximized, which occurs at <span class="math inline">\(x = \mu\)</span> where <span class="math inline">\(\cos(x - \mu) = 1\)</span>. Therefore:</p>
+<p>The exponential term is maximized when <span class="math inline">\(\cos(x - \mu)\)</span> is maximized, which occurs
+at <span class="math inline">\(x = \mu\)</span> where <span class="math inline">\(\cos(x - \mu) = 1\)</span>. Therefore:</p>
 <p><span class="math display">\[
 x_u = e^{\kappa / 2}
 \]</span></p>
@@ -942,28 +944,28 @@ v = x \cdot u \leq x \cdot \sqrt{h(x)} = x \cdot e^{\kappa \cos(x -
 \]</span></p>
 <p>Similarly, <span class="math inline">\(v = x \cdot u \geq x \cdot
 0^+\)</span>, but since <span class="math inline">\(v\)</span> can take
-both signs (when <span class="math inline">\(x\)</span> ranges over
-<span class="math inline">\((\mu - \pi, \mu + \pi]\)</span>), we need
-both the supremum and infimum of <span class="math inline">\(g(x)\)</span>.</p>
+both signs when <span class="math inline">\(x\)</span> ranges over <span class="math inline">\((\mu - \pi, \mu + \pi]\)</span>, so finding <span class="math inline">\(y_u\)</span> and <span class="math inline">\(y_l\)</span> is euivalent to fining both the sup
+and inf of <span class="math inline">\(g(x)\)</span>.</p>
 <p>Therefore:</p>
 <p><span class="math display">\[
 y_u = \sup_{x \in (\mu - \pi, \mu + \pi]} g(x), \qquad y_l = \inf_{x \in
 (\mu - \pi, \mu + \pi]} g(x)
 \]</span></p>
-<p>To find these, we take the derivative of <span class="math inline">\(g\)</span>:</p>
+<p>Now we cannot see the extremes directly, we take the derivative of
+<span class="math inline">\(g\)</span>:</p>
 <p><span class="math display">\[
 g&#39;(x) = \frac{d}{dx} \left[ x \cdot e^{\kappa \cos(x - \mu)/2}
 \right] = e^{\kappa \cos(x - \mu)/2} \left[ 1 - \frac{\kappa}{2} x
 \sin(x - \mu) \right]
 \]</span></p>
 <p>Since the exponential factor is always positive, the critical points
-satisfy:</p>
+are where the other term is 0:</p>
 <p><span class="math display">\[
 1 - \frac{\kappa}{2} x \sin(x - \mu) = 0 \quad \Longleftrightarrow \quad
 \frac{\kappa}{2} x \sin(x - \mu) = 1
 \]</span></p>
-<p>This is a transcendental equation with no closed-form solution, so we
-solve it numerically (using <code>optimize()</code> in R). Let <span class="math inline">\(x_{\max}^*\)</span> and <span class="math inline">\(x_{\min}^*\)</span> denote the maximizer and
+<p>We still cannot solve this analytically, so we solve it numerically
+using <code>optimize()</code>. Let <span class="math inline">\(x_{\max}^*\)</span> and <span class="math inline">\(x_{\min}^*\)</span> denote the maximizer and
 minimizer of <span class="math inline">\(g\)</span>. Then:</p>
 <p><span class="math display">\[
 y_u = g(x_{\max}^*) = x_{\max}^* \cdot e^{\kappa \cos(x_{\max}^* -
@@ -976,31 +978,36 @@ y_l = g(x_{\min}^*) = x_{\min}^* \cdot e^{\kappa \cos(x_{\min}^* -
 </div>
 <div id="deriving-parameters-for-c_2" class="section level3">
 <h3>Deriving Parameters for C_2:</h3>
-<p>The banded region is defined as <span class="math inline">\(\{(u,
+<p>Now, we can see that for <span class="math inline">\(C_2\)</span>,
+the banded region is defined as <span class="math inline">\(\{(u,
 \beta_1 u \pm \beta_0) : 0 &lt; u \leq x_u\}\)</span>:</p>
 <p><span class="math display">\[
 C_2 = \{(u, v) : 0 &lt; u \leq x_u, \; |v - \beta_1 u| \leq \beta_0 \}
 \]</span></p>
-<p>We use the same <span class="math inline">\(x_u =
-e^{\kappa/2}\)</span> as before.</p>
+<p>For <span class="math inline">\(x_u\)</span>, we can see that it is
+the same <span class="math inline">\(x_u = e^{\kappa/2}\)</span> as
+<span class="math inline">\(C-1\)</span>.</p>
+<p>Now we need to find the other two parameters.</p>
 <ul>
 <li>Finding <span class="math inline">\(\beta_1\)</span></li>
 </ul>
-<p>We want the center line <span class="math inline">\(v = \beta_1
-u\)</span> to pass through the “middle” of <span class="math inline">\(C_h\)</span>. Since <span class="math inline">\(v
-= xu\)</span> and the mode of <span class="math inline">\(h(x)\)</span>
-is at <span class="math inline">\(x = \mu\)</span> (where <span class="math inline">\(\cos(x - \mu)\)</span> is maximized), the densest
-part of <span class="math inline">\(C_h\)</span> concentrates near the
-line <span class="math inline">\(v = \mu u\)</span>. Therefore:</p>
+<p>Here we can see <span class="math inline">\(v = \beta_1 u\)</span> is
+like the center line of the shape. Thus, we want it to be at the most
+concentrated part part of <span class="math inline">\(C_h\)</span>.
+Since <span class="math inline">\(v = xu\)</span> and the mode of <span class="math inline">\(h(x)\)</span> is at <span class="math inline">\(x
+= \mu\)</span> where <span class="math inline">\(\cos(x - \mu)\)</span>
+is maximized, the line <span class="math inline">\(v = \mu u\)</span> is
+where we should put our optimum:</p>
 <p><span class="math display">\[
 \beta_1 = \mu
 \]</span></p>
 <ul>
 <li>Finding <span class="math inline">\(\beta_0\)</span></li>
 </ul>
-<p>We need the minimum half-width <span class="math inline">\(\beta_0\)</span> such that the band contains all
-of <span class="math inline">\(C_h\)</span>. For any <span class="math inline">\((u, v) \in C_h\)</span>, the distance from the
-center line is:</p>
+<p>We need the minimum <span class="math inline">\(\beta_0\)</span> such
+that the band contains all of <span class="math inline">\(C_h\)</span>.
+For any <span class="math inline">\((u, v) \in C_h\)</span>, the
+distance from the center line is:</p>
 <p><span class="math display">\[
 |v - \beta_1 u| = |v - \mu u| = |x - \mu| \cdot u
 \]</span></p>
@@ -1010,23 +1017,26 @@ center line is:</p>
 |x - \mu| \cdot u \leq |x - \mu| \cdot e^{\kappa \cos(x - \mu)/2}
 \]</span></p>
 <p>So we need <span class="math inline">\(\beta_0\)</span> to be at
-least as large as the supremum of this expression. Substituting <span class="math inline">\(t = x - \mu\)</span> where <span class="math inline">\(t \in (-\pi, \pi]\)</span>:</p>
+least as large as the supremum of this term above. Now we substitute
+<span class="math inline">\(t = x - \mu\)</span> where <span class="math inline">\(t \in (-\pi, \pi]\)</span> and get:</p>
 <p><span class="math display">\[
 \beta_0 = \sup_{t \in (-\pi, \pi]} |t| \cdot e^{\kappa \cos(t)/2}
 \]</span></p>
-<p>To find the critical points, we differentiate (considering <span class="math inline">\(t &gt; 0\)</span>; the <span class="math inline">\(t &lt; 0\)</span> case is handled by symmetry of
-<span class="math inline">\(|t|\)</span>):</p>
+<p>To find the critical points, we need to differentiate the objective
+function:</p>
 <p><span class="math display">\[
 \frac{d}{dt} \left[ t \cdot e^{\kappa \cos(t)/2} \right] = e^{\kappa
 \cos(t)/2} \left[ 1 - \frac{\kappa}{2} t \sin(t) \right]
 \]</span></p>
-<p>Setting this to zero gives the same transcendental equation:</p>
+<p>Setting this to zero gives the same equation as in <span class="math inline">\(C_1\)</span>:</p>
 <p><span class="math display">\[
 \frac{\kappa}{2} t \sin(t) = 1
 \]</span></p>
-<p>which we solve numerically. We optimize over <span class="math inline">\(t \in (0, \pi]\)</span> and <span class="math inline">\(t \in [-\pi, 0)\)</span> separately and take the
-larger value. Let <span class="math inline">\(t^*\)</span> be the
-maximizer. Then:</p>
+<p>This means we still ues <code>optimize()</code> to solve for it.</p>
+<p>We optimize over <span class="math inline">\(t \in (0, \pi]\)</span>
+and <span class="math inline">\(t \in [-\pi, 0)\)</span> separately and
+take the larger value. Let <span class="math inline">\(t^*\)</span> be
+the maximizer. Then:</p>
 <p><span class="math display">\[
 \beta_0 = |t^*| \cdot e^{\kappa \cos(t^*)/2}
 \]</span></p>
@@ -1044,37 +1054,38 @@ maximizer. Then:</p>
 rvonmises &lt;- function(n, mu, kappa, type) {
 
   # --- Define h(x) and support ---
-  # h(x) = exp(kappa * cos(x - mu)), the unnormalized density
-  # Support: x in (mu - pi, mu + pi]
-  lower &lt;- mu - pi + 1e-10
-  upper &lt;- mu + pi
+  # h(x) = exp(kappa * cos(x - mu)), Support: (mu - pi, mu + pi]
+  lowerb &lt;- mu - pi + 1e-10
+  upperb &lt;- mu + pi
 
   # --- Compute x_u ---
-  # x_u = max sqrt(h(x)) = exp(kappa/2), achieved at x = mu
+  # x_u is the same for both C_1 and C_2
+  # x_u = max sqrt(h(x)) = exp(kappa/2), acquired at x = mu
   x_u &lt;- exp(kappa / 2)
 
   # --- Compute y_l and y_u ---
   # g(x) = x * sqrt(h(x)) = x * exp(kappa * cos(x - mu) / 2)
   # y_u = max g(x), y_l = min g(x), solved numerically
   g &lt;- function(x) x * exp(kappa * cos(x - mu) / 2)
-  y_u &lt;- optimize(g, interval = c(lower, upper), maximum = TRUE)$objective
-  y_l &lt;- optimize(g, interval = c(lower, upper), maximum = FALSE)$objective
+  y_u &lt;- optimize(g, interval = c(lowerb, upperb), maximum = TRUE)$objective
+  y_l &lt;- optimize(g, interval = c(lowerb, upperb), maximum = FALSE)$objective
 
-  # --- For type 2, also compute beta0 and beta1 ---
+  # --- For C_2, also compute beta0 and beta1 ---
   if (type == 2) {
     beta1 &lt;- mu
     # beta0 = max |x - mu| * exp(kappa * cos(x - mu) / 2)
     g2 &lt;- function(x) abs(x - mu) * exp(kappa * cos(x - mu) / 2)
-    opt_left  &lt;- optimize(g2, interval = c(lower, mu), maximum = TRUE)
-    opt_right &lt;- optimize(g2, interval = c(mu, upper), maximum = TRUE)
+    opt_left  &lt;- optimize(g2, interval = c(lowerb, mu), maximum = TRUE)
+    opt_right &lt;- optimize(g2, interval = c(mu, upperb), maximum = TRUE)
     beta0 &lt;- max(opt_left$objective, opt_right$objective)
   }
 
-  # --- Accept-reject loop ---
+  # --- Accept-reject while loop step up ---
   samples &lt;- numeric(n)
   total_proposals &lt;- 0
   accepted &lt;- 0
 
+  # --- Accept-reject loop beigins ---
   while (accepted &lt; n) {
     # Step 1: Generate U1, U2 ~ U(0,1)
     U1 &lt;- runif(1)
@@ -1084,20 +1095,20 @@ rvonmises &lt;- function(n, mu, kappa, type) {
     u &lt;- x_u * U1
 
     if (type == 1) {
-      # Rectangle: v ~ U(y_l, y_u)
+      # C_1 is a rangtangle: v ~ U(y_l, y_u)
       v &lt;- y_l + (y_u - y_l) * U2
     } else {
-      # Band: v = beta1 * u + U(−beta0, beta0)
+      # C_2 is a banded shape: v = beta1 * u + U(−beta0, beta0)
       v &lt;- beta1 * u + (2 * U2 - 1) * beta0
     }
 
     total_proposals &lt;- total_proposals + 1
 
     # Step 3: Accept if (u, v) in C_h
-    # Check u &lt;= sqrt(h(v/u)), equivalently 2*log(u) &lt;= kappa*cos(v/u - mu)
-    # Also check that x = v/u is in the support
+    # Check u &lt;= sqrt(h(v/u)), this is equivalent to 2*log(u) &lt;= kappa*cos(v/u - mu), hence implemented this way.
+    # Also check x = v/u is in the support
     x &lt;- v / u
-    if (x &gt; lower &amp;&amp; x &lt;= upper &amp;&amp; 2 * log(u) &lt;= kappa * cos(x - mu)) {
+    if (x &gt; lowerb &amp;&amp; x &lt;= upperb &amp;&amp; 2 * log(u) &lt;= kappa * cos(x - mu)) {
       accepted &lt;- accepted + 1
       samples[accepted] &lt;- x
     }
@@ -1108,46 +1119,46 @@ rvonmises &lt;- function(n, mu, kappa, type) {
 }</code></pre>
 <p>Now we run a test for different combinations of parameters.</p>
 <pre class="r"><code># --- Quick test ---
-set.seed(42)
+set.seed(123)
 
 cat(&quot;=== Test with mu = pi, kappa = 0.5 ===\n&quot;)</code></pre>
 <pre><code>## === Test with mu = pi, kappa = 0.5 ===</code></pre>
 <pre class="r"><code>x1 &lt;- rvonmises(10000, mu = pi, kappa = 0.5, type = 1)
 cat(&quot;C1 (rectangle) efficiency:&quot;, attr(x1, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C1 (rectangle) efficiency: 0.5458813</code></pre>
+<pre><code>## C1 (rectangle) efficiency: 0.5444844</code></pre>
 <pre class="r"><code>x2 &lt;- rvonmises(10000, mu = pi, kappa = 0.5, type = 2)
 cat(&quot;C2 (banded)    efficiency:&quot;, attr(x2, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C2 (banded)    efficiency: 0.5356186</code></pre>
+<pre><code>## C2 (banded)    efficiency: 0.5307011</code></pre>
 <pre class="r"><code>cat(&quot;\n=== Test with mu = 2*pi, kappa = 0.5 ===\n&quot;)</code></pre>
 <pre><code>## 
 ## === Test with mu = 2*pi, kappa = 0.5 ===</code></pre>
 <pre class="r"><code>x3 &lt;- rvonmises(10000, mu = 2*pi, kappa = 0.5, type = 1)
 cat(&quot;C1 (rectangle) efficiency:&quot;, attr(x3, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C1 (rectangle) efficiency: 0.346897</code></pre>
+<pre><code>## C1 (rectangle) efficiency: 0.3548364</code></pre>
 <pre class="r"><code>x4 &lt;- rvonmises(10000, mu = 2*pi, kappa = 0.5, type = 2)
 cat(&quot;C2 (banded)    efficiency:&quot;, attr(x4, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C2 (banded)    efficiency: 0.5278995</code></pre>
+<pre><code>## C2 (banded)    efficiency: 0.5332196</code></pre>
 <pre class="r"><code>cat(&quot;\n=== Test with mu = pi, kappa = 2 ===\n&quot;)</code></pre>
 <pre><code>## 
 ## === Test with mu = pi, kappa = 2 ===</code></pre>
 <pre class="r"><code>x5 &lt;- rvonmises(10000, mu = pi, kappa = 2, type = 1)
 cat(&quot;C1 (rectangle) efficiency:&quot;, attr(x5, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C1 (rectangle) efficiency: 0.2937203</code></pre>
+<pre><code>## C1 (rectangle) efficiency: 0.2958055</code></pre>
 <pre class="r"><code>x6 &lt;- rvonmises(10000, mu = pi, kappa = 2, type = 2)
 cat(&quot;C2 (banded)    efficiency:&quot;, attr(x6, &quot;efficiency&quot;), &quot;\n&quot;)</code></pre>
-<pre><code>## C2 (banded)    efficiency: 0.7655209</code></pre>
-<pre class="r"><code># Verify the distribution looks correct: mean should be near mu
+<pre><code>## C2 (banded)    efficiency: 0.7564297</code></pre>
+<pre class="r"><code># check the mean of the empirical distribution
 cat(&quot;\nSample mean:&quot;, mean(x1), &quot;\n&quot;)</code></pre>
 <pre><code>## 
-## Sample mean: 3.123663</code></pre>
+## Sample mean: 3.132217</code></pre>
 <pre class="r"><code>cat(&quot;Sample mean:&quot;, mean(x3), &quot;\n&quot;)</code></pre>
-<pre><code>## Sample mean: 6.519638</code></pre>
-<p>We can see that when kappa increases, the efficiency of rectangle
-<span class="math inline">\(C_1\)</span> begins to drop drastically, but
-the efficiency of <span class="math inline">\(C_2\)</span> outperforms
-<span class="math inline">\(C_1\)</span> by a large margin. This
-suggests that the banded approach is more efficient when the shape is
-tilted.</p>
+<pre><code>## Sample mean: 6.565791</code></pre>
+<p>First we can see the estimated sample mean for x1 and x3 is 3.12 and
+6.52, which are close to <span class="math inline">\(\pi\)</span> and
+<span class="math inline">\(2\pi\)</span>. Then, we can see that when
+kappa increases, the efficiency of rectangle <span class="math inline">\(C_1\)</span> begins to drop drastically, but the
+efficiency of <span class="math inline">\(C_2\)</span> outperforms <span class="math inline">\(C_1\)</span> by a large margin. This suggests that
+the banded approach is more efficient when the shape is tilted.</p>
 </div>
 </div>
 

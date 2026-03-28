@@ -408,7 +408,7 @@ $$
 
 #### Case 2: Interior
 
-The proposal for this case now is two pieces, to write it as a true density, we can weight the components:
+The proposal for this case now is two pieces, we need to write the envelope as a true density, weighing the components:
 
 $$
 g(x) = \frac{c_l}{c_l+c_r}\lambda_l e^{-\lambda_l(m-x)}\mathbf{1}[x < m] + 
@@ -580,7 +580,7 @@ We can see that the endpoint cases follow true densities fairly well, but for in
 
 ## Activity 4
  
-The von Mises distribution has density:
+The von Mises distribution has density and we can single out the nominator:
  
 $$
 f(x; \mu, \kappa) = \frac{e^{\kappa \cos(x - \mu)}}{2\pi I_0(\kappa)} \propto e^{\kappa \cos(x - \mu)} =: h(x; \mu, \kappa)
@@ -588,28 +588,28 @@ $$
  
 for $x \in (\mu - \pi, \mu + \pi]$, with $\mu \in [\pi, 2\pi]$ and $\kappa > 0$.
  
-The ratio-of-uniforms method defines the set:
+According to the ratio-of-uniforms method, the set $C_h$ is a desired set in the form:
  
 $$
 C_h = \{(u, v) : 0 < u \leq \sqrt{h(v/u; \mu, \kappa)}\}
 $$
- 
-We need to find two bounding polygons $C_1$ and $C_2$ such that $C_h \subset C_1$ and $C_h \subset C_2$.
+
+This set will give us the target distribution from the ratio of uniform variables. We need to find two bounding polygons $C_1$ and $C_2$ such that $C_h \subset C_1$ and $C_h \subset C_2$.
  
  
 ### Deriving Parameters for C_1: 
 
-Rectangle $[0, x_u] \times [y_l, y_u]$
+$C_1$ is a rectangle $[0, x_u] \times [y_l, y_u]$
  
 - Finding $x_u$
  
-We need the maximum possible value of $u$ over all $(u,v) \in C_h$. Since $u \leq \sqrt{h(v/u)}$, meanwhile letting $x = v/u$:
+We can see that the right bound of the rectangle is $x_u$, so finding $x_u$ is equivalent to finding the maximum value of $u$ over all $(u,v) \in C_h$. Since $u \leq \sqrt{h(v/u)}$, letting $x = v/u$ we get the supreme $\sup u = \sqrt{h(x)}$, then we need to maximize $\sqrt{h(x)$
  
 $$
 x_u = \sup_{x \in (\mu - \pi, \mu + \pi]} \sqrt{h(x)} = \sup_x e^{\kappa \cos(x - \mu)/2}
 $$
  
-The exponential is maximized when $\cos(x - \mu)$ is maximized, which occurs at $x = \mu$ where $\cos(x - \mu) = 1$. Therefore:
+The exponential term is maximized when $\cos(x - \mu)$ is maximized, which occurs at $x = \mu$ where $\cos(x - \mu) = 1$. Therefore:
  
 $$
 x_u = e^{\kappa / 2}
@@ -623,7 +623,7 @@ $$
 v = x \cdot u \leq x \cdot \sqrt{h(x)} = x \cdot e^{\kappa \cos(x - \mu)/2} =: g(x)
 $$
  
-Similarly, $v = x \cdot u \geq x \cdot 0^+$, but since $v$ can take both signs (when $x$ ranges over $(\mu - \pi, \mu + \pi]$), we need both the supremum and infimum of $g(x)$.
+Similarly, $v = x \cdot u \geq x \cdot 0^+$, but since $v$ can take both signs when $x$ ranges over $(\mu - \pi, \mu + \pi]$, so finding $y_u$ and $y_l$ is euivalent to fining both the sup and inf of $g(x)$.
  
 Therefore:
  
@@ -631,19 +631,19 @@ $$
 y_u = \sup_{x \in (\mu - \pi, \mu + \pi]} g(x), \qquad y_l = \inf_{x \in (\mu - \pi, \mu + \pi]} g(x)
 $$
  
-To find these, we take the derivative of $g$:
+Now we cannot see the extremes directly, we take the derivative of $g$:
  
 $$
 g'(x) = \frac{d}{dx} \left[ x \cdot e^{\kappa \cos(x - \mu)/2} \right] = e^{\kappa \cos(x - \mu)/2} \left[ 1 - \frac{\kappa}{2} x \sin(x - \mu) \right]
 $$
  
-Since the exponential factor is always positive, the critical points satisfy:
+Since the exponential factor is always positive, the critical points are where the other term is 0:
  
 $$
 1 - \frac{\kappa}{2} x \sin(x - \mu) = 0 \quad \Longleftrightarrow \quad \frac{\kappa}{2} x \sin(x - \mu) = 1
 $$
  
-This is a transcendental equation with no closed-form solution, so we solve it numerically (using `optimize()` in R). Let $x_{\max}^*$ and $x_{\min}^*$ denote the maximizer and minimizer of $g$. Then:
+We still cannot solve this analytically, so we solve it numerically using `optimize()`. Let $x_{\max}^*$ and $x_{\min}^*$ denote the maximizer and minimizer of $g$. Then:
  
 $$
 y_u = g(x_{\max}^*) = x_{\max}^* \cdot e^{\kappa \cos(x_{\max}^* - \mu)/2}
@@ -656,17 +656,19 @@ $$
 
 ### Deriving Parameters for C_2: 
  
-The banded region is defined as $\{(u, \beta_1 u \pm \beta_0) : 0 < u \leq x_u\}$:
+Now, we can see that for $C_2$, the banded region is defined as $\{(u, \beta_1 u \pm \beta_0) : 0 < u \leq x_u\}$:
  
 $$
 C_2 = \{(u, v) : 0 < u \leq x_u, \; |v - \beta_1 u| \leq \beta_0 \}
 $$
  
-We use the same $x_u = e^{\kappa/2}$ as before.
+For $x_u$, we can see that it is the same $x_u = e^{\kappa/2}$ as $C-1$.
+
+Now we need to find the other two parameters.
  
 - Finding $\beta_1$
  
-We want the center line $v = \beta_1 u$ to pass through the "middle" of $C_h$. Since $v = xu$ and the mode of $h(x)$ is at $x = \mu$ (where $\cos(x - \mu)$ is maximized), the densest part of $C_h$ concentrates near the line $v = \mu u$. Therefore:
+Here we can see $v = \beta_1 u$ is like the center line of the shape. Thus, we want it to be at the most concentrated part part of $C_h$. Since $v = xu$ and the mode of $h(x)$ is at $x = \mu$ where $\cos(x - \mu)$ is maximized, the line $v = \mu u$ is where we should put our optimum:
  
 $$
 \beta_1 = \mu
@@ -674,7 +676,7 @@ $$
  
 - Finding $\beta_0$
  
-We need the minimum half-width $\beta_0$ such that the band contains all of $C_h$. For any $(u, v) \in C_h$, the distance from the center line is:
+We need the minimum $\beta_0$ such that the band contains all of $C_h$. For any $(u, v) \in C_h$, the distance from the center line is:
  
 $$
 |v - \beta_1 u| = |v - \mu u| = |x - \mu| \cdot u
@@ -686,25 +688,27 @@ $$
 |x - \mu| \cdot u \leq |x - \mu| \cdot e^{\kappa \cos(x - \mu)/2}
 $$
  
-So we need $\beta_0$ to be at least as large as the supremum of this expression. Substituting $t = x - \mu$ where $t \in (-\pi, \pi]$:
+So we need $\beta_0$ to be at least as large as the supremum of this term above. Now we substitute $t = x - \mu$ where $t \in (-\pi, \pi]$ and get:
  
 $$
 \beta_0 = \sup_{t \in (-\pi, \pi]} |t| \cdot e^{\kappa \cos(t)/2}
 $$
  
-To find the critical points, we differentiate (considering $t > 0$; the $t < 0$ case is handled by symmetry of $|t|$):
+To find the critical points, we need to differentiate the objective function:
  
 $$
 \frac{d}{dt} \left[ t \cdot e^{\kappa \cos(t)/2} \right] = e^{\kappa \cos(t)/2} \left[ 1 - \frac{\kappa}{2} t \sin(t) \right]
 $$
  
-Setting this to zero gives the same transcendental equation:
+Setting this to zero gives the same equation as in $C_1$:
  
 $$
 \frac{\kappa}{2} t \sin(t) = 1
 $$
  
-which we solve numerically. We optimize over $t \in (0, \pi]$ and $t \in [-\pi, 0)$ separately and take the larger value. Let $t^*$ be the maximizer. Then:
+This means we still ues `optimize()` to solve for it. 
+
+We optimize over $t \in (0, \pi]$ and $t \in [-\pi, 0)$ separately and take the larger value. Let $t^*$ be the maximizer. Then:
  
 $$
 \beta_0 = |t^*| \cdot e^{\kappa \cos(t^*)/2}
@@ -724,37 +728,38 @@ $$
 rvonmises <- function(n, mu, kappa, type) {
 
   # --- Define h(x) and support ---
-  # h(x) = exp(kappa * cos(x - mu)), the unnormalized density
-  # Support: x in (mu - pi, mu + pi]
-  lower <- mu - pi + 1e-10
-  upper <- mu + pi
+  # h(x) = exp(kappa * cos(x - mu)), Support: (mu - pi, mu + pi]
+  lowerb <- mu - pi + 1e-10
+  upperb <- mu + pi
 
   # --- Compute x_u ---
-  # x_u = max sqrt(h(x)) = exp(kappa/2), achieved at x = mu
+  # x_u is the same for both C_1 and C_2
+  # x_u = max sqrt(h(x)) = exp(kappa/2), acquired at x = mu
   x_u <- exp(kappa / 2)
 
   # --- Compute y_l and y_u ---
   # g(x) = x * sqrt(h(x)) = x * exp(kappa * cos(x - mu) / 2)
   # y_u = max g(x), y_l = min g(x), solved numerically
   g <- function(x) x * exp(kappa * cos(x - mu) / 2)
-  y_u <- optimize(g, interval = c(lower, upper), maximum = TRUE)$objective
-  y_l <- optimize(g, interval = c(lower, upper), maximum = FALSE)$objective
+  y_u <- optimize(g, interval = c(lowerb, upperb), maximum = TRUE)$objective
+  y_l <- optimize(g, interval = c(lowerb, upperb), maximum = FALSE)$objective
 
-  # --- For type 2, also compute beta0 and beta1 ---
+  # --- For C_2, also compute beta0 and beta1 ---
   if (type == 2) {
     beta1 <- mu
     # beta0 = max |x - mu| * exp(kappa * cos(x - mu) / 2)
     g2 <- function(x) abs(x - mu) * exp(kappa * cos(x - mu) / 2)
-    opt_left  <- optimize(g2, interval = c(lower, mu), maximum = TRUE)
-    opt_right <- optimize(g2, interval = c(mu, upper), maximum = TRUE)
+    opt_left  <- optimize(g2, interval = c(lowerb, mu), maximum = TRUE)
+    opt_right <- optimize(g2, interval = c(mu, upperb), maximum = TRUE)
     beta0 <- max(opt_left$objective, opt_right$objective)
   }
 
-  # --- Accept-reject loop ---
+  # --- Accept-reject while loop step up ---
   samples <- numeric(n)
   total_proposals <- 0
   accepted <- 0
 
+  # --- Accept-reject loop beigins ---
   while (accepted < n) {
     # Step 1: Generate U1, U2 ~ U(0,1)
     U1 <- runif(1)
@@ -764,20 +769,20 @@ rvonmises <- function(n, mu, kappa, type) {
     u <- x_u * U1
 
     if (type == 1) {
-      # Rectangle: v ~ U(y_l, y_u)
+      # C_1 is a rangtangle: v ~ U(y_l, y_u)
       v <- y_l + (y_u - y_l) * U2
     } else {
-      # Band: v = beta1 * u + U(−beta0, beta0)
+      # C_2 is a banded shape: v = beta1 * u + U(−beta0, beta0)
       v <- beta1 * u + (2 * U2 - 1) * beta0
     }
 
     total_proposals <- total_proposals + 1
 
     # Step 3: Accept if (u, v) in C_h
-    # Check u <= sqrt(h(v/u)), equivalently 2*log(u) <= kappa*cos(v/u - mu)
-    # Also check that x = v/u is in the support
+    # Check u <= sqrt(h(v/u)), this is equivalent to 2*log(u) <= kappa*cos(v/u - mu), hence implemented this way.
+    # Also check x = v/u is in the support
     x <- v / u
-    if (x > lower && x <= upper && 2 * log(u) <= kappa * cos(x - mu)) {
+    if (x > lowerb && x <= upperb && 2 * log(u) <= kappa * cos(x - mu)) {
       accepted <- accepted + 1
       samples[accepted] <- x
     }
@@ -793,7 +798,7 @@ Now we run a test for different combinations of parameters.
 
 ```{r}
 # --- Quick test ---
-set.seed(42)
+set.seed(123)
 
 cat("=== Test with mu = pi, kappa = 0.5 ===\n")
 x1 <- rvonmises(10000, mu = pi, kappa = 0.5, type = 1)
@@ -813,10 +818,10 @@ cat("C1 (rectangle) efficiency:", attr(x5, "efficiency"), "\n")
 x6 <- rvonmises(10000, mu = pi, kappa = 2, type = 2)
 cat("C2 (banded)    efficiency:", attr(x6, "efficiency"), "\n")
 
-# Verify the distribution looks correct: mean should be near mu
+# check the mean of the empirical distribution
 cat("\nSample mean:", mean(x1), "\n")
 cat("Sample mean:", mean(x3), "\n")
 ```
 
-We can see that when kappa increases, the efficiency of rectangle $C_1$ begins to drop drastically, but the efficiency of $C_2$ outperforms $C_1$ by a large margin. This suggests that the banded approach is more efficient when the shape is tilted.
+First we can see the estimated sample mean for x1 and x3 is 3.12 and 6.52, which are close to $\pi$ and $2\pi$. Then, we can see that when kappa increases, the efficiency of rectangle $C_1$ begins to drop drastically, but the efficiency of $C_2$ outperforms $C_1$ by a large margin. This suggests that the banded approach is more efficient when the shape is tilted.
 
